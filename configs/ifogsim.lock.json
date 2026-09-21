@@ -1,0 +1,7 @@
+{
+  "repository": "https://github.com/Cloudslab/iFogSim.git",
+  "tag": "v2.0.0",
+  "commit": "643c433b9d6c9f031a2e31f129f2b2c6c7fae835",
+  "java_major": 17,
+  "smoke_example": "org.fog.test.perfeval.VRGameFog"
+}

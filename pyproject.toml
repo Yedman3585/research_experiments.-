@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fogids-research"
+version = "0.1.0"
+description = "Research scaffold for edge/cloud IDS scheduling with iFogSim"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+fogids = "fogids.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
