@@ -13,6 +13,7 @@ PDF-копии, предоставленные пользователем и р�
 | [sensors-26-01704-v2.pdf](sensors-26-01704-v2.pdf) | Cloud-Edge Resource Scheduling and Offloading Optimization Based on Deep Reinforcement Learning | Sensors 2026, DOI: 10.3390/s26051704 |
 | [2106.10707v1.pdf](2106.10707v1.pdf) | Minimizing Delay in Network Function Visualization with Quantum Computing | arXiv:2106.10707v1, 2021; название воспроизведено из PDF |
 | [2205.01165v1.pdf](2205.01165v1.pdf) | Classical and Quantum Solvers for Joint Network/Servers Power Optimization | arXiv:2205.01165v1, 2022 |
+| [2603.23127v1.pdf](2603.23127v1.pdf) | Q-GARS: Quantum-inspired Robust Microservice Chaining Scheduling | arXiv:2603.23127v1, 2026 |
 
 `project-vision.md` из первоначальных материалов относится к другому,
 инвестиционному проекту и сюда не включён.
