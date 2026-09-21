@@ -1,0 +1,24 @@
+{
+  "seed": 7,
+  "capacity_unit_mi": 1000,
+  "capacity_horizon_s": 2.0,
+  "simulation_horizon_s": 15.0,
+  "release_s": 1.0,
+  "deadline_weight": 4.0,
+  "contention_weight": 0.3,
+  "sa_reads": 24,
+  "sa_sweeps": 300,
+  "nodes": [
+    {"name": "edge", "mips": 1000, "capacity_units": 2, "uplink_bytes_s": 2000000, "uplink_latency_s": 0.02},
+    {"name": "fog", "mips": 2000, "capacity_units": 4, "uplink_bytes_s": 1000000, "uplink_latency_s": 0.08},
+    {"name": "cloud", "mips": 4000, "capacity_units": 8, "uplink_bytes_s": 1000000, "uplink_latency_s": 0.0}
+  ],
+  "tasks": [
+    {"id": 0, "demand_units": 1, "input_bytes": 100000, "deadline_s": 0.8, "priority": 3},
+    {"id": 1, "demand_units": 2, "input_bytes": 200000, "deadline_s": 1.4, "priority": 2},
+    {"id": 2, "demand_units": 1, "input_bytes": 50000, "deadline_s": 1.0, "priority": 1},
+    {"id": 3, "demand_units": 3, "input_bytes": 300000, "deadline_s": 1.8, "priority": 3},
+    {"id": 4, "demand_units": 2, "input_bytes": 150000, "deadline_s": 2.0, "priority": 1},
+    {"id": 5, "demand_units": 3, "input_bytes": 100000, "deadline_s": 2.5, "priority": 2}
+  ]
+}

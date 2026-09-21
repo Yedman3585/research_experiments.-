@@ -16,7 +16,14 @@ def main():
     run = sub.add_parser("run", help="Run an upstream example; not a custom IDS simulation")
     run.add_argument("--class-name", default="org.fog.test.perfeval.VRGameFog")
     run.add_argument("--timeout", type=int, default=120)
+    demo = sub.add_parser("ids-demo", help="Run a tiny QUBO placement experiment in iFogSim")
+    demo.add_argument("--config", type=Path, default=ROOT / "configs/ids-small.json")
+    demo.add_argument("--output", type=Path, default=ROOT / "artifacts/ids-small")
     args = parser.parse_args()
+    if args.command == "ids-demo":
+        from .experiment import run as run_experiment
+        run_experiment(args.config, args.output)
+        return 0
     if args.command == "doctor":
         checks = {
             "java": shutil.which("java"),
