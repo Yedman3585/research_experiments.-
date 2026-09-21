@@ -1,13 +1,14 @@
-# Fog/Edge IDS scheduling research
+# Fog/Edge IDS Scheduling Research
 
-Рабочая основа для исследований распределения IDS-инференса между edge/cloud.
-Сейчас установлен iFogSim2 и создан Python-пакет для его сборки и запуска.
+This repository is a working scaffold for research on IDS inference scheduling
+across edge, fog, and cloud environments. It currently provides a pinned iFogSim2
+setup and a small Python package for building and launching the simulator.
 
-Рассмотренные статьи и их список находятся в [papers/](papers/README.md).
+The reviewed papers and their bibliography are listed in [papers/](papers/README.md).
 
-## Быстрый старт
+## Quick Start
 
-Из корня проекта:
+From the repository root:
 
 ```bash
 source .venv/bin/activate
@@ -15,39 +16,41 @@ fogids doctor
 fogids run
 ```
 
-`fogids run` запускает оригинальный пример `VRGameFog`: это проверка установки,
-а не IDS-эксперимент. Полный вывод сохраняется в `artifacts/VRGameFog.log`.
+`fogids run` launches the original upstream `VRGameFog` example. This is an
+installation smoke test, not an IDS experiment. The full output is written to
+`artifacts/VRGameFog.log`.
 
-Повторная сборка Java:
+To rebuild the Java simulator classes:
 
 ```bash
 fogids build
 ```
 
-Можно выбрать другой upstream-класс:
+To run another upstream class:
 
 ```bash
 fogids run --class-name org.fog.test.perfeval.VRGameFog --timeout 120
 ```
 
-## Версии и воспроизводимость
+## Versions And Reproducibility
 
-- Python: проверено на **3.12.14**, изолированное окружение `.venv`.
-- Java: проверено на **Temurin 17.0.20.1**, используется существующая системная Java.
-- iFogSim2: официальный релиз **v2.0.0**, commit
+- Python: tested with **3.12.14** in an isolated `.venv` environment.
+- Java: tested with **Temurin 17.0.20.1**, using the existing system Java.
+- iFogSim2: official **v2.0.0** release, commit
   `643c433b9d6c9f031a2e31f129f2b2c6c7fae835`.
-- Источник: https://github.com/Cloudslab/iFogSim
-- Версия закреплена в `configs/ifogsim.lock.json`.
+- Source: https://github.com/Cloudslab/iFogSim
+- The simulator version is pinned in `configs/ifogsim.lock.json`.
 
-Текущая ветка upstream `5f68d3947e450d8d2b4af42670be819206be68c9`
-содержит интеграцию с CloudSim 7 и не собирается на Java 17
-(например, использует `List.getLast()`). Поэтому выбран официальный релиз
-iFogSim2 v2.0.0. Его исходники не изменены. При компиляции используется
-ISO-8859-1, поскольку некоторые старые GUI-файлы содержат не-UTF-8 байты.
-Предупреждения javac об устаревших конструкторах в upstream не мешают сборке.
+The current upstream branch at `5f68d3947e450d8d2b4af42670be819206be68c9`
+contains CloudSim 7 integration and does not compile on Java 17, for example
+because it uses `List.getLast()`. For that reason, this repository uses the
+official iFogSim2 v2.0.0 release. The upstream sources are not modified.
+Compilation uses ISO-8859-1 because some older GUI source files contain
+non-UTF-8 bytes. `javac` warnings about deprecated upstream constructors do not
+prevent the build.
 
-Для восстановления после клонирования этого проекта нужны JDK 17,
-Python 3.10+ и доступ к GitHub/PyPI:
+To restore the environment after cloning this repository, use JDK 17,
+Python 3.10+, and access to GitHub/PyPI:
 
 ```bash
 python3.12 scripts/bootstrap.py
@@ -55,34 +58,36 @@ source .venv/bin/activate
 fogids run
 ```
 
-Bootstrap не переключает уже существующий checkout другой версии и не меняет
-системные установки. Java-библиотеки берутся из upstream `jars/`;
-предварительно скомпилированные upstream `out/` и `output/` не используются.
+The bootstrap script does not switch an existing checkout to another version and
+does not change system-wide installations. Java libraries are taken from the
+upstream `jars/` directory; precompiled upstream `out/` and `output/`
+directories are not used.
 
-## Структура
+## Repository Structure
 
 ```text
-src/fogids/              Python-пакет и CLI
-scripts/ifogsim.py       Сборка Java и запуск JVM из Python
-scripts/bootstrap.py     Восстановление окружения
-configs/ifogsim.lock.json Версия симулятора
-vendor/ifogsim/          Оригинальный checkout, исключён из Git
-build/ifogsim/classes/   Скомпилированные нами классы, исключены из Git
-artifacts/              Логи запусков, исключены из Git
-tmp/pdfs/               Существующие материалы обзора литературы
+src/fogids/               Python package and CLI
+scripts/ifogsim.py        Java build and JVM launch wrapper
+scripts/bootstrap.py      Environment restoration script
+configs/ifogsim.lock.json Pinned simulator version
+vendor/ifogsim/           Original upstream checkout, excluded from Git
+build/ifogsim/classes/    Locally compiled Java classes, excluded from Git
+artifacts/                Run logs, excluded from Git
+tmp/pdfs/                 Existing literature-review materials
 ```
 
-## Граница готовности
+## Current Scope
 
-Готовы окружение, сборка всех 327 Java source files, Python CLI и успешный
-запуск стандартной симуляции. Python пока управляет запуском JVM как процесса.
-**Постоянного RPC-моста для онлайн-решений пока нет.**
+The environment is ready: all 327 Java source files compile successfully, the
+Python CLI is available, and the standard upstream simulation runs. Python
+currently controls the JVM as an external process. There is **no persistent RPC
+bridge for online scheduling decisions yet**.
 
-Следующий этап: зафиксировать маленький IDS-сценарий, контракт состояния и
-назначений, затем добавить постоянный канал Java–Python и простую baseline-политику.
-В протоколе понадобятся `snapshot_id`, модельное время снимка, назначения,
-время вычисления решения и проверка актуальности при применении.
+The next step is to define a small IDS scenario, a state and assignment contract,
+a persistent Java-Python communication channel, and a simple baseline policy.
+The protocol will need a `snapshot_id`, simulation time for the snapshot,
+assignments, solver runtime, and a freshness check before applying decisions.
 
-ML, QUBO и QPU-зависимости пока не добавлены: конкретный метод ещё выбирается.
-Результаты VRGameFog не являются экспериментальными результатами IDS и не
-доказывают преимущество какого-либо планировщика.
+ML, QUBO, and QPU dependencies have not been added yet because the exact method
+is still being selected. VRGameFog outputs are not IDS experimental results and
+do not demonstrate the advantage of any scheduler.
